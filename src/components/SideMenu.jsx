@@ -33,37 +33,39 @@ export default function SideMenu({ email }) {
   };
 
   return (
-    <section className="hidden md:block relative h-full w-720 min-w-[15rem]">
-      <div className="hidden md:block h-full w-full bg-bg-color-variant z-40">
-        <div className="py-4 pl-3 font-bold text-base">
-          <h1>All Boards</h1>
-        </div>
-
-        {/* all boards */}
-        {boards.map((item) => (
-          <div
-            key={item}
-            className={`${
-              pathname === item ? "bg-primary-color text-white" : ""
-            } flex items-center rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4 pl-3`}
-            onClick={() => {
-              router.push(`/${item}`);
-              router.refresh();
-            }}
-          >
-            <Layout className="mr-2 h-4 w-4" />
-            {item}
+    <>
+      <section className="hidden md:block relative h-full w-720 min-w-[15rem]">
+        <div className="hidden md:block h-full w-full bg-bg-color-variant z-40">
+          <div className="py-4 pl-3 font-bold text-base">
+            <h1>All Boards</h1>
           </div>
-        ))}
 
-        <div
-          className="flex items-center hover:bg-primary-color/10 hover:text-primary-color text-primary-color rounded-l-none rounded-r-full font-semibold py-4 pl-3 cursor-pointer"
-          onClick={() => window.my_modal_7.showModal()}
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Create New Board
+          {/* all boards */}
+          {boards.map((item) => (
+            <div
+              key={item}
+              className={`${
+                pathname === item ? "bg-primary-color text-white" : ""
+              } flex items-center rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4 pl-3`}
+              onClick={() => {
+                router.push(`/${item}`);
+                router.refresh();
+              }}
+            >
+              <Layout className="mr-2 h-4 w-4" />
+              {item}
+            </div>
+          ))}
+
+          <div
+            className="flex items-center hover:bg-primary-color/10 hover:text-primary-color text-primary-color rounded-l-none rounded-r-full font-semibold py-4 pl-3 cursor-pointer"
+            onClick={() => window.my_modal_7.showModal()}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Create New Board
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Open the modal using ID.showModal() method */}
       <dialog id="my_modal_7" className="modal">
@@ -139,6 +141,6 @@ export default function SideMenu({ email }) {
           <button>close</button>
         </form>
       </dialog>
-    </section>
+    </>
   );
 }
