@@ -16,13 +16,11 @@ import { signOut } from "next-auth/react";
 export default function VerticalDotMenu({ email }) {
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
   const router = useRouter();
-  // const email = "rohanjacob@gmail.com";
+  const url = "https://task-management-board.vercel.app";
 
   const handleDelete = () => {
     axios
-      .delete(
-        `http://localhost:3000/api/boardName?email=${email}&board=${pathname}`
-      )
+      .delete(`${url}/api/boardName?email=${email}&board=${pathname}`)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err))
       .finally(() => router.refresh());

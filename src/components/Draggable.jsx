@@ -17,6 +17,7 @@ import { useStore } from "@/util/zustandStore";
 import axios from "axios";
 
 export default function Draggable({ selectedBoard, email, board }) {
+  const url = "https://task-management-board.vercel.app";
   const [tasks, setTasks, setColumns, setTaskDragOver, setTaskDragEnd] =
     useStore((state) => [
       state.tasks,
@@ -36,10 +37,7 @@ export default function Draggable({ selectedBoard, email, board }) {
   useEffect(() => {
     const postTasks = async () => {
       await axios
-        .post(
-          `http://localhost:3000/api/userTask?email=${email}&board=${board}`,
-          tasks
-        )
+        .post(`${url}/api/userTask?email=${email}&board=${board}`, tasks)
         .then((res) => console.log(res.data))
         .catch((error) => console.log(error));
     };

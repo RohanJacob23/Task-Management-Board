@@ -17,10 +17,11 @@ export default function UserAuthForm({ method }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const url = "https://task-management-board.vercel.app";
 
   const createUser = async (e) => {
     axios
-      .post("http://localhost:3000/api/newUser", {
+      .post(`${url}/api/newUser`, {
         name,
         email,
         password,

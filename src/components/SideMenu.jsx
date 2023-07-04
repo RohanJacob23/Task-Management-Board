@@ -15,13 +15,13 @@ export default function SideMenu({ email }) {
   const [boards] = useStore((state) => [state.boards]);
   const [boardName, setBoardName] = useState("");
   const [tempColumn, setTempColumn] = useState(["todo", "doing"]);
-  // const email = "rohanjacob@gmail.com";
+  const url = "https://task-management-board.vercel.app";
 
   const handleSubmit = async (e) => {
     window.my_modal_7.close();
     e.preventDefault();
     await axios
-      .post(`http://localhost:3000/api/newBoard?email=${email}`, {
+      .post(`${url}/api/newBoard?email=${email}`, {
         boardName,
         tempColumn,
       })

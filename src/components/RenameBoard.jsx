@@ -8,8 +8,8 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 
 export default function RenameBoard({ email }) {
+  const url = "https://task-management-board.vercel.app";
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
-  // const email = "rohanjacob@gmail.com";
   const router = useRouter();
   const [boardName, setBoardName] = useState(pathname);
 
@@ -20,10 +20,9 @@ export default function RenameBoard({ email }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post(
-        `http://localhost:3000/api/boardName?email=${email}&board=${pathname}`,
-        { boardName }
-      )
+      .post(`${url}/api/boardName?email=${email}&board=${pathname}`, {
+        boardName,
+      })
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error))
       .finally(() => {
