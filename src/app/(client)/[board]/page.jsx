@@ -5,9 +5,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function getData(email, board) {
-  console.log("fetching Data");
   const res = await fetch(
-    `http://127.0.0.1:3000/api/userTask?email=${email}&board=${board}`,
+    `${process.env.API_URL}/api/userTask?email=${email}&board=${board}`,
     { cache: "no-store" }
   );
   const data = await res.json();
