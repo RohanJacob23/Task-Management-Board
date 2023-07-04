@@ -11,7 +11,9 @@ export async function GET(req) {
       email,
     },
   });
-  const selectedBoard = user.tasks.find((userTask) => userTask.title === board);
+  const selectedBoard = user.tasks.find(
+    (userTask) => userTask.title.trim() === board
+  );
   return NextResponse.json(
     selectedBoard ? selectedBoard : { error: "No such Board" }
   );
