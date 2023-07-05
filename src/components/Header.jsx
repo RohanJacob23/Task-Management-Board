@@ -28,10 +28,18 @@ export default function Header({ dropdownList, email }) {
         className={`bg-bg-color-variant flex relative w-full items-center justify-between px-3 py-4 z-50`}
       >
         <div className="flex items-center gap-3">
-          {/* TODO: logo */}
-          <div className="relative w-28 md:w-32 h-10 flex items-center justify-center">
+          <div className="hidden md:flex relative w-28 md:w-32 h-10 items-center justify-center">
             <Image
               src={"/logo.png"}
+              fill
+              alt="logo"
+              priority={true}
+              className="object-contain"
+            />
+          </div>
+          <div className="flex md:hidden relative w-8 h-10 items-center justify-center">
+            <Image
+              src={"/onlyLogo.png"}
               fill
               alt="logo"
               priority={true}
@@ -41,7 +49,7 @@ export default function Header({ dropdownList, email }) {
 
           {/* add boards */}
           <BoardsDropdown dropdownList={boards} pathname={pathname} />
-          <h1 className="hidden md:block text-xl font-semibold">
+          <h1 className="hidden md:block text-3xl font-semibold">
             {pathname === "" ? "Select a Board" : pathname}
           </h1>
         </div>
