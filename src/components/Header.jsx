@@ -10,6 +10,7 @@ import VerticalDotMenu from "./VerticalDotMenu";
 import BoardMenuModal from "./BoardMenuModal";
 import { useStore } from "@/util/zustandStore";
 import RenameBoard from "./RenameBoard";
+import Image from "next/image";
 
 export default function Header({ dropdownList, email }) {
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
@@ -28,8 +29,14 @@ export default function Header({ dropdownList, email }) {
       >
         <div className="flex items-center gap-3">
           {/* TODO: logo */}
-          <div className="w-10 h-10 bg-primary-color/10 rounded-full flex items-center justify-center">
-            Logo
+          <div className="relative w-28 md:w-32 h-10 flex items-center justify-center">
+            <Image
+              src={"/logo.png"}
+              fill
+              alt="logo"
+              priority={true}
+              className="object-contain"
+            />
           </div>
 
           {/* add boards */}
