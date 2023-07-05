@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 import { Button } from "./ui/button";
-import Dialog from "./Dialog";
+import NewTaskDialog from "./NewTaskDialog";
 import BoardsDropdown from "./BoardsDropdown";
 import { Plus } from "lucide-react";
 import VerticalDotMenu from "./VerticalDotMenu";
@@ -51,9 +51,8 @@ export default function Header({ dropdownList, email }) {
             <Plus className="h-5 w-5" />
             <span className="hidden md:block ml-2">Add New Task</span>
           </Button>
-          <dialog id="my_modal_1" className="modal ml-0">
-            <Dialog id="my_modal_1" />
-          </dialog>
+
+          <NewTaskDialog />
 
           {/* vertical dot icon */}
           <VerticalDotMenu email={email} />

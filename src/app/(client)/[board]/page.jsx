@@ -60,7 +60,11 @@ export default async function page({ params: { board } }) {
   // Inside the section, render the Draggable component with the selectedBoard, board, and email props
   return (
     <section className="flex p-4 overflow-auto gap-4">
-      <Draggable selectedBoard={userTasks} board={board} email={email} />
+      <Draggable
+        selectedBoard={userTasks}
+        board={filteredBoard}
+        email={email}
+      />
     </section>
   );
 }

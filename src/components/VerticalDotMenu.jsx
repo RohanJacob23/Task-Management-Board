@@ -13,15 +13,28 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { signOut } from "next-auth/react";
 
+/**
+ * Renders a vertical dot menu component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.email - The user's email.
+ * @returns {JSX.Element} - The rendered component.
+ */
 export default function VerticalDotMenu({ email }) {
+  // Extract the pathname from the current URL
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
   const router = useRouter();
+  // const url = "http://localhost:3000";
+  // The base URL for API requests
   const url = "https://task-management-board.vercel.app";
 
+  /**
+   * Handles the delete action for the board.
+   * Sends a DELETE request to the API and refreshes the router.
+   */
   const handleDelete = () => {
     axios
       .delete(`${url}/api/boardName?email=${email}&board=${pathname}`)
-      .then((res) => console.log(res.data))
       .catch((err) => console.log(err))
       .finally(() => router.refresh());
   };
@@ -33,35 +46,38 @@ export default function VerticalDotMenu({ email }) {
           <MoreVertical className="text-primary-color cursor-pointer" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-bg-color">
+          {/* Edit board option */}
           <DropdownMenuItem
             className="font-semibold hover:bg-white hover:text-primary-color cursor-pointer"
             onClick={() => window.my_modal_6.showModal()}
           >
             Edit Board
           </DropdownMenuItem>
+          {/* Rename board option */}
           <DropdownMenuItem
             className="font-semibold hover:bg-white hover:text-primary-color cursor-pointer"
             onClick={() => window.my_modal_8.showModal()}
           >
             Rename Board
           </DropdownMenuItem>
+          {/* Delete board option */}
           <DropdownMenuItem
             className="font-semibold text-destructive hover:bg-white hover:text-primary-color cursor-pointer"
             onClick={() => window.my_modal_9.showModal()}
           >
-            {/* TODO: Delete board function */}
             Delete Board
           </DropdownMenuItem>
+          {/* Logout option */}
           <DropdownMenuItem
             className="font-semibold text-destructive hover:bg-white hover:text-primary-color cursor-pointer"
             onClick={() => signOut({ callbackUrl: "/auth/login" })}
           >
-            {/* TODO: Delete board function */}
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* Delete board confirmation modal */}
       <dialog id="my_modal_9" className="modal">
         <form
           method="dialog"

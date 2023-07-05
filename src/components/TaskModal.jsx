@@ -3,8 +3,9 @@
 import { useStore } from "@/util/zustandStore";
 import React from "react";
 import { MoreVertical } from "lucide-react";
-import Dialog from "./Dialog";
+import Dialog from "./NewTaskDialog";
 import { Button } from "./ui/button";
+import UpdateTaskDialog from "./UpdateTaskDialog";
 
 export default function TaskModal() {
   const [
@@ -114,9 +115,7 @@ export default function TaskModal() {
         </form>
       </dialog>
 
-      <dialog id="my_modal_4" className="modal ml-0">
-        {selectedTask && <Dialog id="my_modal_4" from="taskModal" />}
-      </dialog>
+      {selectedTask && <UpdateTaskDialog />}
 
       <dialog id="my_modal_5" className="modal">
         <form

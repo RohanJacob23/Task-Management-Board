@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { Plus, ShowerHead, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useStore } from "@/util/zustandStore";
 
-// TODO: Need to implement change board zustand
-
+/**
+ * Component for displaying and editing a board's columns.
+ */
 export default function BoardMenuModal() {
+  // Destructure the necessary functions and state variables from the custom hook
   const [
     columns,
     handleColumnsInput,
@@ -25,10 +27,20 @@ export default function BoardMenuModal() {
     state.deleteColumn,
     state.showError,
   ]);
-  const handleInputChange = (e, column, index) => {
+
+  /**
+   * Handle input change for a column.
+   * @param {Event} e - The input change event.
+   * @param {number} index - The index of the column being edited.
+   */
+  const handleInputChange = (e, index) => {
     handleColumnsInput(e.target.value, index);
   };
 
+  /**
+   * Handle form submission.
+   * @param {Event} e - The form submission event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     changeColumn(columns);
@@ -44,7 +56,7 @@ export default function BoardMenuModal() {
         <h3 className="font-bold text-lg">Edit Board!</h3>
 
         <div className="flex flex-col mt-3 space-y-4">
-          {/* columns section */}
+          {/* Columns section */}
           <div className="flex flex-col space-y-2">
             <Label className="text-sm font-semibold whitespace-nowrap">
               Subtasks
@@ -54,7 +66,7 @@ export default function BoardMenuModal() {
                 <Input
                   type="text"
                   value={column}
-                  onChange={(e) => handleInputChange(e, column, index)}
+                  onChange={(e) => handleInputChange(e, index)}
                   className="focus:border-primary-color border-2"
                 />
                 <X
@@ -63,6 +75,7 @@ export default function BoardMenuModal() {
                 />
               </div>
             ))}
+            {/* Display error message if showError is true */}
             <h6
               className={`text-destructive text-sm ${
                 showError ? "block" : "hidden"
@@ -72,7 +85,7 @@ export default function BoardMenuModal() {
             </h6>
           </div>
 
-          {/* buttons */}
+          {/* Buttons */}
           <div
             className="flex items-center justify-center py-3 hover:bg-primary-color rounded-full bg-primary-color/10 text-primary-color hover:text-white font-semibold cursor-pointer"
             onClick={addColumn}

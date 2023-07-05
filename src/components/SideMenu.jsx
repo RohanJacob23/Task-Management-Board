@@ -16,6 +16,7 @@ export default function SideMenu({ email }) {
   const [boardName, setBoardName] = useState("");
   const [tempColumn, setTempColumn] = useState(["todo", "doing"]);
   const url = "https://task-management-board.vercel.app";
+  // const url = "http://localhost:3000";
 
   const handleSubmit = async (e) => {
     window.my_modal_7.close();
@@ -45,12 +46,9 @@ export default function SideMenu({ email }) {
             <div
               key={item}
               className={`${
-                pathname === item ? "bg-primary-color text-white" : ""
+                pathname === item.trim() ? "bg-primary-color text-white" : ""
               } flex items-center rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4 pl-3`}
-              onClick={() => {
-                router.push(`/${item}`);
-                router.refresh();
-              }}
+              onClick={() => router.push(`/${item}`)}
             >
               <Layout className="mr-2 h-4 w-4" />
               {item}

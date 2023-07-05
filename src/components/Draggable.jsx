@@ -15,9 +15,23 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import TaskModal from "./TaskModal";
 import { useStore } from "@/util/zustandStore";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
+/**
+ * Draggable component that handles drag and drop functionality for tasks.
+ *
+ * @param {Object} props - Component props.
+ * @param {Object} props.selectedBoard - Selected board object.
+ * @param {string} props.email - User email.
+ * @param {string} props.board - Board name.
+ * @returns {React.ReactNode} - Rendered component.
+ */
 export default function Draggable({ selectedBoard, email, board }) {
   const url = "https://task-management-board.vercel.app";
+  // const localUrl = "http://localhost:3000";
+  const router = useRouter();
+
+  // Retrieve state and state setters from custom hook
   const [tasks, setTasks, setColumns, setTaskDragOver, setTaskDragEnd] =
     useStore((state) => [
       state.tasks,
@@ -26,19 +40,27 @@ export default function Draggable({ selectedBoard, email, board }) {
       state.setTaskDragOver,
       state.setTaskDragEnd,
     ]);
+
+  // Flag to track route change
   const [routeChangeFlag, setRouteChangeFlag] = useState(false);
 
+  // Refresh router on component mount and update
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
+  // Update tasks and columns when selectedBoard changes
   useEffect(() => {
     setTasks(selectedBoard.tasks);
     setColumns(Object.keys(selectedBoard.tasks));
     setRouteChangeFlag(true);
   }, [setTasks, selectedBoard, setColumns]);
 
+  // Post tasks to API when tasks change
   useEffect(() => {
     const postTasks = async () => {
       await axios
         .post(`${url}/api/userTask?email=${email}&board=${board}`, tasks)
-        .then((res) => console.log(res.data))
         .catch((error) => console.log(error));
     };
 
@@ -46,18 +68,16 @@ export default function Draggable({ selectedBoard, email, board }) {
       postTasks();
   }, [tasks, selectedBoard, email, board, routeChangeFlag]);
 
+  // Define sensors for drag and drop
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 1,
-      },
-    }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 1 } }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
     useSensor(TouchSensor)
   );
 
+  // Handle drag over event
   const handleDragOver = ({ over, active }) => {
     const overId = over?.id;
 
@@ -79,6 +99,7 @@ export default function Draggable({ selectedBoard, email, board }) {
     }
   };
 
+  // Handle drag end event
   const handleDragEnd = ({ active, over }) => {
     if (!over) {
       return;
@@ -107,7 +128,6 @@ export default function Draggable({ selectedBoard, email, board }) {
           <SortableItem key={column} column={column} taskArr={taskArr} />
         ))}
       </DndContext>
-      {/* You can open the modal using ID.showModal() method */}
       <TaskModal />
     </>
   );

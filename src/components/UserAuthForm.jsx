@@ -11,14 +11,25 @@ import { signIn } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+/**
+ * Render a form for user authentication.
+ * @param {string} method - The method for authentication (signin or login).
+ */
 export default function UserAuthForm({ method }) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const url = "https://task-management-board.vercel.app";
 
+  // API URL
+  const url = "https://task-management-board.vercel.app";
+  // const url = "http://localhost:3000";
+
+  /**
+   * Create a new user.
+   * @param {object} e - The event object.
+   */
   const createUser = async (e) => {
     axios
       .post(`${url}/api/newUser`, {
@@ -31,6 +42,10 @@ export default function UserAuthForm({ method }) {
       .finally(() => router.push("/auth/login"));
   };
 
+  /**
+   * Handle form submission.
+   * @param {object} e - The event object.
+   */
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(name);
@@ -53,6 +68,7 @@ export default function UserAuthForm({ method }) {
           <div className="grid gap-2.5">
             {method === "signin" && (
               <>
+                {/* Input field for name */}
                 <Label className="sr-only" htmlFor="name">
                   Name
                 </Label>
@@ -69,6 +85,7 @@ export default function UserAuthForm({ method }) {
                 />
               </>
             )}
+            {/* Input field for email */}
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
@@ -83,6 +100,7 @@ export default function UserAuthForm({ method }) {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
+            {/* Input field for password */}
             <Label className="sr-only" htmlFor="password">
               Name
             </Label>
@@ -98,6 +116,7 @@ export default function UserAuthForm({ method }) {
               value={password}
             />
           </div>
+          {/* Button for form submission */}
           <Button
             disabled={isLoading}
             className="bg-primary-color hover:bg-primary-color/30 hover:text-primary-color px-4 py-1"
@@ -117,6 +136,7 @@ export default function UserAuthForm({ method }) {
           </span>
         </div>
       </div>
+      {/* Button for google authentication */}
       <Button
         variant="outline"
         type="button"
