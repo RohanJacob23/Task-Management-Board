@@ -47,7 +47,7 @@ export default function BoardsDropdown({ dropdownList, pathname }) {
           <DropdownMenuItem
             key={item}
             className={`${
-              pathname === item ? "bg-primary-color text-white" : ""
+              pathname === item.trim() ? "bg-primary-color text-white" : ""
             } rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4`}
             onClick={() => router.push(item)}
           >
