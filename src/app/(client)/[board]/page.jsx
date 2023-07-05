@@ -4,90 +4,63 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+/**
+ * Fetches data from an API endpoint based on the provided email and board.
+ *
+ * @param {string} email - The email of the user.
+ * @param {string} board - The board to fetch data from.
+ * @return {Promise<object>} The fetched data.
+ */
 async function getData(email, board) {
-  const res = await fetch(
-    `${process.env.API_URL}/api/userTask?email=${email}&board=${board}`,
-    { cache: "no-store" }
-  );
+  // Construct the URL for the API endpoint using environment variable and query parameters
+  const url = `${process.env.API_URL}/api/userTask?email=${email}&board=${board}`;
+
+  // Fetch data from the API using the constructed URL
+  const res = await fetch(url, { cache: "no-store" });
+
+  // Parse the response body as JSON
   const data = await res.json();
+
+  // Check if the response is not OK (status code in the 200-299 range)
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
+    // Throw an error to activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
+
+  // Check if the response data contains an error property
   if (data.error) {
+    // Redirect to the home page
     redirect("/");
   }
+
+  // Return the fetched data
   return data;
 }
 
+/**
+ * Retrieves user tasks based on the email and filtered board string.
+ *
+ * @param {object} params - The parameters passed to the function.
+ * @param {object} params.board - The board parameter from the params object.
+ * @return {object} A section element with the specified classes and a Draggable component.
+ */
 export default async function page({ params: { board } }) {
+  // Retrieve the email from the server session using the authOptions
   const {
     user: { email },
   } = await getServerSession(authOptions);
-  const tempObj = [
-    {
-      title: "Marketing Plan",
-      tasks: {},
-    },
-    {
-      title: "Roadmap",
-      tasks: {
-        todo: [
-          {
-            id: 1,
-            heading: "Build Ui onboarding flow 1",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "todo",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: true },
-              { id: 3, subtask: "sub task 3", status: false },
-            ],
-          },
-          {
-            id: 2,
-            heading: "Build Ui onboarding flow 2",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "todo",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: false },
-              { id: 3, subtask: "sub task 3", status: true },
-            ],
-          },
-        ],
-        doing: [
-          {
-            id: 3,
-            heading: "Build Ui onboarding flow 3",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "doing",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: true },
-              { id: 3, subtask: "sub task 3", status: false },
-            ],
-          },
-        ],
-      },
-    },
-  ];
+
+  // Remove forward slashes and replace "%20" with spaces in the board string
   const filteredBoard = board.replace("/", "").replace(/%20/g, " ");
-  // const email = "rohanjacob@gmail.com";
+
+  // Retrieve user tasks using the email and filtered board string
   const userTasks = await getData(email, filteredBoard);
 
-  const selectedBoard = tempObj.find((item) => item.title === filteredBoard);
-  console.log(userTasks);
+  // Return a section element with the "flex", "p-4", "overflow-auto", and "gap-4" classes
+  // Inside the section, render the Draggable component with the selectedBoard, board, and email props
   return (
     <section className="flex p-4 overflow-auto gap-4">
       <Draggable selectedBoard={userTasks} board={board} email={email} />
-      {/* <Draggable selectedBoard={selectedBoard} board={board} email={email} /> */}
     </section>
   );
 }

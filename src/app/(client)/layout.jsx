@@ -7,85 +7,54 @@ import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Fetches the board from the API endpoint using the provided email.
+ *
+ * @param {string} email - The email of the user.
+ * @return {Promise} A promise that resolves to the retrieved board data.
+ */
 async function fetchBoard(email) {
+  // Send a GET request to the API endpoint with the email as a query parameter
   const res = await fetch(
     `${process.env.API_URL}/api/boardName?email=${email}`,
     { cache: "no-store" }
   );
+
+  // Parse the response as JSON
   const data = await res.json();
-  // Recommendation: handle errors
+
+  // Check if the response is not OK (status code other than 200)
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
+    // Throw an error to activate the closest Error Boundary component
     throw new Error("Failed to fetch data");
   }
 
+  // Return the retrieved data
   return data;
 }
 
+/**
+ * Renders the layout of the application.
+ *
+ * @param {Object} children - The children components to be rendered within the layout.
+ * @return {JSX.Element} The JSX structure with the layout components.
+ */
 export default async function AppLayout({ children }) {
+  // Retrieve the session information from the server using authOptions
   const session = await getServerSession(authOptions);
+
+  // If no session exists, redirect the user to the login page
   if (!session) redirect("/auth/login");
+
+  // Extract the user's email from the session object
   const {
     user: { email },
   } = session;
-  // const email = "rohanjacob@gmail.com";
+
+  // Fetch all the boards associated with the user's email
   const allBoards = await fetchBoard(email);
-  const tempObj = [
-    {
-      title: "Marketing Plan",
-      tasks: {},
-    },
-    {
-      title: "Roadmap",
-      tasks: {
-        todo: [
-          {
-            id: 1,
-            heading: "Build Ui onboarding flow 1",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "todo",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: true },
-              { id: 3, subtask: "sub task 3", status: false },
-            ],
-          },
-          {
-            id: 2,
-            heading: "Build Ui onboarding flow 2",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "todo",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: false },
-              { id: 3, subtask: "sub task 3", status: true },
-            ],
-          },
-        ],
-        doing: [
-          {
-            id: 3,
-            heading: "Build Ui onboarding flow 3",
-            description: "some random description",
-            totalTask: 3,
-            completedTask: 1,
-            column: "doing",
-            subTasks: [
-              { id: 1, subtask: "sub task 1", status: false },
-              { id: 2, subtask: "sub task 2", status: true },
-              { id: 3, subtask: "sub task 3", status: false },
-            ],
-          },
-        ],
-      },
-    },
-  ];
-  // console.log(allBoards);
-  const dropdownList = tempObj.map((item) => item.title);
+
+  // Return the updated JSX structure with the refactored code
   return (
     <section className="flex flex-col h-full">
       <Header dropdownList={allBoards} email={email} />

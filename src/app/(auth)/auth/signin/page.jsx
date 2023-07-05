@@ -1,7 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Command } from "lucide-react";
-
 import UserAuthForm from "@/components/UserAuthForm";
 import { buttonVariants } from "@/components/ui/button";
 import { getServerSession } from "next-auth";
@@ -13,12 +11,23 @@ export const metadata = {
   description: "Authentication forms built using the components.",
 };
 
+/**
+ * A description of the entire function.
+ *
+ * @return {Promise<void>} description of return value
+ */
 export default async function page() {
+  // Get the server session using the provided auth options
   const session = await getServerSession(authOptions);
+
+  // If a session exists, redirect to the home page
   if (session) redirect("/");
+
+  // Render the page
   return (
     <>
       <div className="container relative h-full flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        {/* Login link */}
         <Link
           className={`${buttonVariants({
             variant: "ghost",
@@ -27,6 +36,8 @@ export default async function page() {
         >
           Login
         </Link>
+
+        {/* Sidebar */}
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
@@ -43,6 +54,8 @@ export default async function page() {
             </blockquote>
           </div>
         </div>
+
+        {/* Main content */}
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
