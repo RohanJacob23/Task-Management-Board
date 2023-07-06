@@ -1,35 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Management
 
-## Getting Started
+Taskify is a powerful task manager application designed to streamline your productivity and help you stay organized. Built with Next.js 13, it offers a modern and efficient user interface styled with the sleek and customizable Shadcn/UI and Tailwind CSS frameworks. The application leverages the scalability and flexibility of MongoDB as the database, ensuring robust data storage and retrieval capabilities.
 
-First, run the development server:
+With Taskify, you can easily create, manage, and track your tasks in a seamless and intuitive manner. The app provides a comprehensive set of features, including task creation, due date assignment, priority settings, categorization, and task status updates. It allows you to create task lists, set reminders, and collaborate with team members or share tasks with others.
+
+Taskify utilizes the Prisma ORM (Object-Relational Mapping) for seamless interaction with the MongoDB database, providing a simplified and efficient data access layer. This ensures optimal performance and data consistency throughout the application.
+
+With its combination of Next.js 13, Shadcn/UI, Tailwind CSS, MongoDB, and Prisma ORM, Taskify delivers a delightful user experience, robust task management capabilities, and a scalable foundation for future enhancements. Stay organized, stay productive, and achieve your goals with Taskify.
+
+
+## Demo
+
+https://task-management-board.vercel.app
+
+
+
+## Features
+
+- Task Creation
+- Task Organization
+- Task Status
+- Responsive Design
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`GOOGLE_CLIENT_ID`
+`GOOGLE_CLIENT_SECRET`
+
+`API_URL`
+
+`NEXTAUTH_SECRET`
+`NEXTAUTH_URL`
+
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+  git clone https://github.com/RohanJacob23/Task-Management-Board.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  cd Task-Management-Board
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Built with
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Task-Management-Board
+- [React](https://reactjs.org/)
+- [Next js](https://nextjs.org/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Prisma](https://www.prisma.io/)
+- [NextAuth](https://next-auth.js.org/)
