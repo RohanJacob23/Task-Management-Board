@@ -11,8 +11,9 @@ import BoardMenuModal from "./BoardMenuModal";
 import { useStore } from "@/util/zustandStore";
 import RenameBoard from "./RenameBoard";
 import Image from "next/image";
+import { Skeleton } from "./ui/skeleton";
 
-export default function Header({ dropdownList, email }) {
+export default function Header({ dropdownList, email, skeleton }) {
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
   const [columns, boards, setBoards] = useStore((state) => [
     state.columns,
@@ -48,7 +49,11 @@ export default function Header({ dropdownList, email }) {
           </div>
 
           {/* add boards */}
-          <BoardsDropdown dropdownList={boards} pathname={pathname} />
+          {skeleton ? (
+            <Skeleton className="md:hidden w-28 h-5 bg-white" />
+          ) : (
+            <BoardsDropdown dropdownList={boards} pathname={pathname} />
+          )}
           <h1 className="hidden md:block text-3xl font-semibold">
             {pathname === "" ? "Select a Board" : pathname}
           </h1>

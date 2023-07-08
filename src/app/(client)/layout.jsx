@@ -5,8 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 /**
  * Fetches the board from the API endpoint using the provided email.
  *
@@ -59,7 +57,7 @@ export default async function AppLayout({ children }) {
     <section className="flex flex-col h-full">
       <Header dropdownList={allBoards} email={email} />
       <main className="flex h-full overflow-y-hidden">
-        <SideMenu dropdownList={allBoards} email={email} />
+        <SideMenu email={email} />
         {children}
       </main>
     </section>

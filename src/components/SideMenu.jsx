@@ -8,8 +8,9 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { X } from "lucide-react";
 import axios from "axios";
+import { Skeleton } from "./ui/skeleton";
 
-export default function SideMenu({ email }) {
+export default function SideMenu({ email, skeleton, tempBoard }) {
   const pathname = usePathname().replace("/", "").replace(/%20/g, " ");
   const router = useRouter();
   const [boards] = useStore((state) => [state.boards]);
@@ -42,18 +43,38 @@ export default function SideMenu({ email }) {
           </div>
 
           {/* all boards */}
-          {boards.map((item) => (
-            <div
-              key={item}
-              className={`${
-                pathname === item.trim() ? "bg-primary-color text-white" : ""
-              } flex items-center rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4 pl-3`}
-              onClick={() => router.push(`/${item}`)}
-            >
-              <Layout className="mr-2 h-4 w-4" />
-              {item}
-            </div>
-          ))}
+
+          {skeleton ? (
+            <>
+              {tempBoard.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center py-4 px-3 w-full"
+                  onClick={() => router.push(`/${item}`)}
+                >
+                  <Skeleton className="w-5 h-5 mr-2 rounded-full bg-white" />
+                  <Skeleton className="w-36 h-5 bg-white" />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {boards.map((item) => (
+                <div
+                  key={item}
+                  className={`${
+                    pathname === item.trim()
+                      ? "bg-primary-color text-white"
+                      : ""
+                  } flex items-center rounded-l-none rounded-r-full font-semibold hover:bg-white hover:text-primary-color cursor-pointer py-4 pl-3`}
+                  onClick={() => router.push(`/${item}`)}
+                >
+                  <Layout className="mr-2 h-4 w-4" />
+                  {item}
+                </div>
+              ))}
+            </>
+          )}
 
           <div
             className="flex items-center hover:bg-primary-color/10 hover:text-primary-color text-primary-color rounded-l-none rounded-r-full font-semibold py-4 pl-3 cursor-pointer"
